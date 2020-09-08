@@ -52,4 +52,5 @@ def search(cond):
 
         gl_file.close()
 
-search("iw > 4")
+condition = input('Enter a condition of the form <stat> <operand> <value> (e.g. hr > 2):')
+search(condition)
