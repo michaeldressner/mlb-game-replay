@@ -28,7 +28,7 @@ stats = ['ab', 'h', 'd', 't', 'hr', 'rbi', 'sh', 'sf', 'hbp', 'w', 'iw', 'so',
         'sb', 'cs', 'gidp', 'ci', 'lob', 'pu', 'ier', 'er', 'wp', 'bk', 'po',
         'ass', 'err', 'pb', 'dp', 'tp']
 year = 2019 # Fixed year for now
-gl_file = open('GL' + str(year) + '.TXT', 'r')
+gl_file = open('gl/GL' + str(year) + '.TXT', 'r')
 for line in csv.reader(gl_file, delimiter = ","):
     game = Game(line)
 
