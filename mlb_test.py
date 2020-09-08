@@ -1,4 +1,5 @@
 import sqlite3
+from team import Team
 
 conn = sqlite3.connect('lahmansbaseballdb.sqlite')
 cursor = conn.cursor()
@@ -15,6 +16,8 @@ for line in teamid_file:
     city = fields[2]
     nickname = fields[3]
     first_year = fields[4]
+    last_year = fields[5]
+    teams[abr] = Team(abr, league, city, nickname, first_year, last_year)
 teamid_file.close()
 
 year = 2019 # Fixed year for now
