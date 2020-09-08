@@ -4,7 +4,7 @@ def convert_to_int(field):
     if field != "":
         return int(field)
     else:
-        return 0
+        return -1
 
 class Game():
     def __init__(self, fields):
