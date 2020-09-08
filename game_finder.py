@@ -28,7 +28,7 @@ def search(cond):
     stats = ['ab', 'h', 'd', 't', 'hr', 'rbi', 'sh', 'sf', 'hbp', 'w', 'iw',
             'so', 'sb', 'cs', 'gidp', 'ci', 'lob', 'pu', 'ier', 'er', 'wp',
             'bk', 'po', 'ass', 'err', 'pb', 'dp', 'tp']
-    for year in range(2008, 2020):
+    for year in range(1989, 2020):
         gl_file = open('gl/GL' + str(year) + '.TXT', 'r')
         for line in csv.reader(gl_file, delimiter = ","):
             game = Game(line)
