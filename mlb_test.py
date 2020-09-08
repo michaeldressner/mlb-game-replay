@@ -27,13 +27,13 @@ teamid_file.close()
 stats = ['ab', 'h', 'd', 't', 'hr', 'rbi', 'sh', 'sf', 'hbp', 'w', 'iw', 'so',
         'sb', 'cs', 'gidp', 'ci', 'lob', 'pu', 'ier', 'er', 'wp', 'bk', 'po',
         'ass', 'err', 'pb', 'dp', 'tp']
-year = 2019 # Fixed year for now
-gl_file = open('gl/GL' + str(year) + '.TXT', 'r')
-for line in csv.reader(gl_file, delimiter = ","):
-    game = Game(line)
+for year in range(2008, 2020):
+    gl_file = open('gl/GL' + str(year) + '.TXT', 'r')
+    for line in csv.reader(gl_file, delimiter = ","):
+        game = Game(line)
 
-    for stat in stats:
-        teams[game.v_team].add_stat(stat, getattr(game, 'v_' + stat))
-        teams[game.h_team].add_stat(stat, getattr(game, 'h_' + stat))
+        for stat in stats:
+            teams[game.v_team].add_stat(stat, getattr(game, 'v_' + stat))
+            teams[game.h_team].add_stat(stat, getattr(game, 'h_' + stat))
 
-gl_file.close()
+    gl_file.close()
