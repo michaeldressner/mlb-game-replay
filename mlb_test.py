@@ -6,7 +6,7 @@ from team import Team
 conn = sqlite3.connect('lahmansbaseballdb.sqlite')
 cursor = conn.cursor()
 
-def search(cond, streak = False):
+def search(cond):
     teams = dict()
     team_states = dict()
 
@@ -41,13 +41,10 @@ def search(cond, streak = False):
             cond_op = tokens[1]
             cond_val = tokens[2]
 
-            if streak:
-                pass
-            else:
-                if eval('getattr(game, \'v_' + cond_stat + '\') ' + cond_op +
-                        cond_val) or eval('getattr(game, \'h_' + cond_stat +
-                                '\') ' + cond_op + cond_val):
-                    print(game.date + " " + game.v_team + "@" + game.h_team)
+            if eval('getattr(game, \'v_' + cond_stat + '\') ' + cond_op +
+                    cond_val) or eval('getattr(game, \'h_' + cond_stat +
+                            '\') ' + cond_op + cond_val):
+                print(game.date + " " + game.v_team + "@" + game.h_team)
 
             for stat in stats:
                 teams[game.v_team].add_stat(stat, getattr(game, 'v_' + stat))
