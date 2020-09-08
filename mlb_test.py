@@ -1,3 +1,4 @@
+import csv
 import sqlite3
 from game import Game
 from team import Team
@@ -25,9 +26,9 @@ teamid_file.close()
 
 year = 2019 # Fixed year for now
 gl_file = open('GL' + str(year) + '.TXT', 'r')
-for line in gl_file:
+for line in csv.reader(gl_file, delimiter = ","):
     game = Game(line)
-    if game.attendance >= 0:
+    if game.attendance == 0:
         print(game.date + ":", game.v_team + "@" + game.h_team)
 
 gl_file.close()

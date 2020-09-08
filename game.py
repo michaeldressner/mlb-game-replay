@@ -1,6 +1,13 @@
+from csv import reader
+
+def convert_to_int(field):
+    if field != "":
+        return int(field)
+    else:
+        return 0
+
 class Game():
-    def __init__(self, line):
-        fields = line[:-1].split(',')
+    def __init__(self, fields):
         fields = [field.strip('"') for field in fields]
 
         # https://www.retrosheet.org/gamelogs/glfields.txt
@@ -21,8 +28,8 @@ class Game():
         self.forfeit = fields[14]
         self.protest = fields[15]
         self.park_id = fields[16]
-        self.attendance = int(fields[17])
-        self.duration = int(fields[18])
+        self.attendance = convert_to_int(fields[17])
+        self.duration = convert_to_int(fields[18])
         self.v_line = fields[19]
         self.h_line = fields[20]
         self.v_AB = int(fields[21])
@@ -117,7 +124,7 @@ class Game():
         for i in range(105, 132, 3):
             self.v_starters_id.append(fields[i])
             self.v_starters_name.append(fields[i + 1])
-            self.v_starters_pos.append(fields[i + 2])
+            self.v_starters_pos.append(int(fields[i + 2]))
 
         self.h_starters_id = [None]
         self.h_starters_name = [None]
