@@ -55,7 +55,7 @@ class Game():
         self.v_wp = int(fields[41])
         self.v_bk = int(fields[42]) # Balks
         self.v_po = int(fields[43])
-        self.v_as = int(fields[44]) # Assists
+        self.v_ass = int(fields[44]) # Assists
         self.v_err = int(fields[45])
         self.v_pb = int(fields[46]) # Passed balls
         self.v_dp = int(fields[47])
@@ -83,7 +83,7 @@ class Game():
         self.h_wp = int(fields[69])
         self.h_bk = int(fields[70]) # Balks
         self.h_po = int(fields[71])
-        self.h_as = int(fields[72]) # Assists
+        self.h_ass = int(fields[72]) # Assists
         self.h_err = int(fields[73])
         self.h_pb = int(fields[74]) # Passed balls
         self.h_dp = int(fields[75])
