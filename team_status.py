@@ -22,6 +22,7 @@ class TeamStatus():
         self.er = 0
         self.wp = 0
         self.bk = 0
+        self.po = 0
         self.ass = 0
         self.err = 0
         self.pb = 0

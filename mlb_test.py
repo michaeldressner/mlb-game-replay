@@ -33,7 +33,7 @@ for line in csv.reader(gl_file, delimiter = ","):
     game = Game(line)
 
     for stat in stats:
-        teams[game.v_team].add_stat('h', getattr(game, 'v_' + stat))
-        teams[game.h_team].add_stat('h', getattr(game, 'h_' + stat))
+        teams[game.v_team].add_stat(stat, getattr(game, 'v_' + stat))
+        teams[game.h_team].add_stat(stat, getattr(game, 'h_' + stat))
 
 gl_file.close()
