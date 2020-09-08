@@ -29,7 +29,4 @@ gl_file = open('GL' + str(year) + '.TXT', 'r')
 for line in csv.reader(gl_file, delimiter = ","):
     game = Game(line)
 
-    teams[game.h_team].status.increase_attr('h', game.h_h)
-    teams[game.v_team].status.increase_attr('h', game.v_h)
-
 gl_file.close()

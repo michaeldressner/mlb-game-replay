@@ -10,3 +10,10 @@ class Team():
         self.last_year = last_year
         self.season = TeamStatus()
         self.career = TeamStatus()
+
+    def add_stat(self, stat, amount):
+        curr_season = getattr(self.season, stat)
+        curr_career = getattr(self.career, stat)
+
+        setattr(self.season, stat, curr_season + amount)
+        setattr(self.career, stat, curr_career + amount)
