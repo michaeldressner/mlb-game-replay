@@ -26,7 +26,7 @@ def search(cond):
             'bk', 'po', 'ass', 'err', 'pb', 'dp', 'tp']
     for year in range(1989, 2020):
         gl_file = open('gl/GL' + str(year) + '.TXT', 'r')
-        for line in csv.reader(gl_file, delimiter = ","):
+        for line in csv.reader(gl_file):
             game = Game(line)
 
             # Let's assume condition has the stat name, then an operator,
