@@ -1,10 +1,6 @@
 import csv
-import sqlite3
 from game import Game
 from team import Team
-
-conn = sqlite3.connect('lahmansbaseballdb.sqlite')
-cursor = conn.cursor()
 
 def search(cond):
     teams = dict()
@@ -14,7 +10,7 @@ def search(cond):
     for line in teamid_file:
         fields = line[:-1].split(',')
         fields = [field.strip('"') for field in fields]
-        
+
         # https://www.retrosheet.org/TEAMABR.TXT
         abr = fields[0]
         league = fields[1]
@@ -37,14 +33,19 @@ def search(cond):
             # then a value
             # Ex: h > 4, hr >= 4
             tokens = cond.split()
-            cond_stat = tokens[0]
+            cond_stat = tokens[0].lower()
             cond_op = tokens[1]
             cond_val = tokens[2]
 
-            if eval('getattr(game, \'v_' + cond_stat + '\') ' + cond_op +
-                    cond_val) or eval('getattr(game, \'h_' + cond_stat +
-                            '\') ' + cond_op + cond_val):
-                print(game.date + " " + game.v_team + "@" + game.h_team)
+            if hasattr(game, 'v_' + cond_stat):
+                if eval('getattr(game, \'v_' + cond_stat + '\') ' + cond_op +
+                        cond_val) or eval('getattr(game, \'h_' + cond_stat +
+                                '\') ' + cond_op + cond_val):
+                    print(game.date + " " + game.v_team + "@" + game.h_team)
+            else:
+                if eval('getattr(game, \'' + cond_stat + '\') ' + cond_op +
+                        cond_val):
+                    print(game.date + " " + game.v_team + "@" + game.h_team)
 
             for stat in stats:
                 teams[game.v_team].add_stat(stat, getattr(game, 'v_' + stat))
