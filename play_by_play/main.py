@@ -16,6 +16,13 @@ def get_teams(year):
 
     return teams
 
+def get_roster(year, team):
+    """Takes in a year and a team and returns a dictionary that maps the player
+    id of each player on the team to their respective player objects. Reads from
+    the appropriate csv file."""
+    pass
+
+# MAIN PROGRAM
+
 for year in range(2019, 2020):
     teams = get_teams(year)
-    print(teams)
