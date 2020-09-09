@@ -1,4 +1,5 @@
 import csv
+from player import Player
 from team import Team
 
 def get_teams(year):
@@ -6,11 +7,11 @@ def get_teams(year):
     teams = dict()
     team_file = open('data/TEAM/TEAM' + str(year), 'r')
 
-    for team in csv.reader(team_file):
-        abr = team[0]
-        league = team[1]
-        city = team[2]
-        nickname = team[3]
+    for record in csv.reader(team_file):
+        abr = record[0]
+        league = record[1]
+        city = record[2]
+        nickname = record[3]
 
         teams[abr] = Team(abr, league, city, nickname)
 
@@ -20,9 +21,28 @@ def get_roster(year, team):
     """Takes in a year and a team and returns a dictionary that maps the player
     id of each player on the team to their respective player objects. Reads from
     the appropriate csv file."""
-    pass
+    roster = dict()
+    roster_file = open('data/ROS/' + team + str(year) + '.ROS')
+
+    for record in csv.reader(roster_file):
+        player_id = record[0]
+        last_name = record[1]
+        first_name = record[2]
+        bats = record[3]
+        throws = record[4]
+        team = record[5]
+        pos = record[6]
+
+        roster[player_id] = Player(player_id, last_name, first_name, bats,
+                throws, team, pos)
+
+    return roster
 
 # MAIN PROGRAM
 
 for year in range(2019, 2020):
     teams = get_teams(year)
+
+    for team in teams:
+        roster = get_roster(year, team)
+        print(roster)
