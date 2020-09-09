@@ -45,4 +45,3 @@ for year in range(2019, 2020):
 
     for team in teams:
         roster = get_roster(year, team)
-        print(roster)
