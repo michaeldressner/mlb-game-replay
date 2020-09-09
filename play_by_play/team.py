@@ -5,5 +5,5 @@ class Team():
         self.city = city
         self.nickname = nickname
 
-    def __str__(self):
+    def __repr__(self):
         return self.city + ' ' + self.nickname
