@@ -40,11 +40,10 @@ def get_roster(year, team):
 
 # MAIN PROGRAM
 
-for year in range(2019, 2020):
+for year in range(2000, 2020):
     teams = get_teams(year)
 
     for team in teams:
         roster = get_roster(year, team)
         teams[team].set_roster(roster)
-        if team == 'WAS':
-            print(teams[team].status.roster)
+        
