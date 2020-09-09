@@ -8,3 +8,7 @@ class Player():
         self.throws = throws
         self.team = team
         self.pos = pos
+
+    def __repr__(self):
+        return pos + ": " + first_name + " " + last_name + " " + bats + "/" + \
+                throws
