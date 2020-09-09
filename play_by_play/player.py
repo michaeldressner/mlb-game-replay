@@ -10,5 +10,5 @@ class Player():
         self.pos = pos
 
     def __repr__(self):
-        return pos + ": " + first_name + " " + last_name + " " + bats + "/" + \
-                throws
+        return self.pos + ": " + self.first_name + " " + self.last_name + " " \
+                + self.bats + "/" + self.throws
