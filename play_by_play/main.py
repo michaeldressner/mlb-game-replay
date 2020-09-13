@@ -1,4 +1,5 @@
 import csv
+import re
 from player import Player
 from team import Team
 from game import Game
@@ -61,7 +62,12 @@ def get_games(year, team):
             value = record[2]
 
             if info == 'starttime':
-                pass 
+                if re.match(r'^\d{1,2}:\d{2}[AP]M$', value):
+                    # e.g. 11:06AM, 7:35PM, etc.
+                    pass
+                else:
+                    # Anything we haven't handled
+                    print(value)
 
             setattr(curr_game, info, value)
 
@@ -70,7 +76,7 @@ def get_games(year, team):
 
 # MAIN PROGRAM
 
-for year in range(2000, 2020):
+for year in range(1990, 2020):
     teams = get_teams(year)
     games = list()
 
