@@ -53,19 +53,31 @@ def get_games(year, team):
         record_type = record[0]
 
         if record_type == 'id':
+            if curr_game:
+                games.append(curr_game)
             curr_game = Game()
         elif record_type == 'info':
             info = record[1]
             value = record[2]
 
+            if info == 'starttime':
+                pass 
+
             setattr(curr_game, info, value)
+
+    game_file.close()
+    return games
 
 # MAIN PROGRAM
 
 for year in range(2000, 2020):
     teams = get_teams(year)
+    games = list()
 
     for team in teams:
         roster = get_roster(year, teams[team])
         teams[team].set_roster(roster)
-        get_games(year, teams[team])
+        home_games = get_games(year, teams[team])
+        games.extend(home_games)
+
+    games.sort(key = lambda game: game.date)
