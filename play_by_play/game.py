@@ -31,4 +31,13 @@ class Game():
         self.h_starters = list()
 
     def __repr__(self):
-        return self.date + ' - ' + self.visteam + '@' + self.hometeam
+        result =  self.date + ' '
+
+        if self.starttime != -1:
+            hour = int(self.starttime / 60)
+            minute = self.starttime % 60
+            result += str(hour).zfill(2) + ':' + str(minute).zfill(2) + ' '
+
+        result += '- ' + self.visteam + '@' + self.hometeam
+        
+        return result
