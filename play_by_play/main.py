@@ -62,12 +62,27 @@ def get_games(year, team):
             value = record[2]
 
             if info == 'starttime':
-                if re.match(r'^\d{1,2}:\d{2}[AP]M$', value):
-                    # e.g. 11:06AM, 7:35PM, etc.
-                    pass
+                am_pm_format = re.search(r'^(\d{1,2}):(\d{2})([AP]M)$', value)
+                if value == "0:00PM":
+                    # Game time unknown
+                    value = -1
+                elif am_pm_format:
+                    # e.g. 11:05AM, 7:41PM, etc.
+                    hour = int(am_pm_format.group(1))
+                    minute = int(am_pm_format.group(2))
+                    am_pm = am_pm_format.group(3)
+
+                    # Convert to seconds since midnight or noon
+                    seconds = (hour % 12) * 60 + minute
+
+                    if am_pm == 'PM':
+                        seconds += 12 * 60
+
+                    print(value + " - " + str(seconds))
                 else:
-                    # Anything we haven't handled
-                    print(value)
+                    # An unhandled format
+                    # print(value)
+                    pass
 
             setattr(curr_game, info, value)
 
