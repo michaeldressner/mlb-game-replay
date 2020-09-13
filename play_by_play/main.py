@@ -5,19 +5,19 @@ from team import Team
 from game import Game
 
 def fix_start_time(game):
-    if not game.starttime:
+    if game.starttime == '':
         game.starttime = -1
         return
 
     am_pm_format = re.search(r'^(\d{1,2}):(\d{2})([AP]M)$', game.starttime)
     ambiguous_format = re.search(r'^(\d{1,2}):(\d{2})$', game.starttime)
 
-    if value == "0:00PM":
-        curr_game.ambtime = False
+    if game.starttime == "0:00PM":
+        game.ambtime = False
         # Game time unknown
         seconds = -1
     elif am_pm_format:
-        curr_game.ambtime = False
+        game.ambtime = False
         # e.g. 11:05AM, 7:41PM, etc.
         hour = int(am_pm_format.group(1))
         minute = int(am_pm_format.group(2))
@@ -29,17 +29,25 @@ def fix_start_time(game):
         if am_pm == 'PM':
             seconds += 12 * 60
     elif ambiguous_format:
-        curr_game.ambtime = True
+        game.ambtime = True
         hour = int(ambiguous_format.group(1))
         minute = int(ambiguous_format.group(2))
 
         seconds = (hour % 12) * 60 + minute
     else:
         # An unhandled format
-        curr_game.ambtime = False
+        game.ambtime = False
         seconds = -1
-        print(value)
+        print(game.starttime)
         # pass
+    
+    game.starttime = seconds
+    # If it is a night game and time is ambiguous
+    if game.daynight == 'night' and game.ambtime:
+        # If game happened 6 AM or later we're going to have to make
+        # it a PM time
+        if game.starttime >= 6 * 60:
+            game.starttime += 12 * 60
 
 
 def get_teams(year):
@@ -93,26 +101,16 @@ def get_games(year, team):
 
         if record_type == 'id':
             if curr_game:
-                # Fix start time if necessary (if it was missing that is)
-                if curr_game.starttime == '':
-                    curr_game.starttime = -1
+                fix_start_time(curr_game)
                 games.append(curr_game)
             curr_game = Game()
         elif record_type == 'info':
             info = record[1]
             value = record[2]
 
-            if info == 'daynight':
-                # If it is a night game and time is ambiguous
-                if value == 'night' and curr_game.ambtime:
-                    # If game happened 6 AM or later we're going to have to make
-                    # it a PM time
-                    if curr_game.starttime >= 6 * 60:
-                        curr_game.starttime += 12 * 60
-            else:
-                setattr(curr_game, info, value)
+            setattr(curr_game, info, value)
         elif record_type == 'start':
-            
+           pass 
 
     game_file.close()
     return games
@@ -132,3 +130,6 @@ for year in range(1990, 2020):
     
     # Sort all games by date (primary key) and start time (secondary key)
     games.sort(key = lambda game: (game.date, game.starttime))
+
+    for game in games:
+        print(game)
