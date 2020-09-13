@@ -1,6 +1,7 @@
 import csv
 from player import Player
 from team import Team
+from game import Game
 
 def get_teams(year):
     """Takes in a year and returns a dictionary of the data from the csv file"""
@@ -41,11 +42,23 @@ def get_roster(year, team):
 def get_games(year, team):
     """Takes in a year and a team and returns a list of game objects. Also
     'sets up' the games by initializing the fields"""
+
     games = list()
+    # https://www.retrosheet.org/datause.txt
     game_file = open('data/EV/' + str(year) + team.abr + '.EV' + team.league)
+    # curr_game will really hold a Game object soon, not a boolean
+    curr_game = False
 
     for record in csv.reader(game_file):
-        pass
+        record_type = record[0]
+
+        if record_type == 'id':
+            curr_game = Game()
+        elif record_type == 'info':
+            info = record[1]
+            value = record[2]
+
+            setattr(curr_game, info, value)
 
 # MAIN PROGRAM
 
@@ -55,3 +68,4 @@ for year in range(2000, 2020):
     for team in teams:
         roster = get_roster(year, teams[team])
         teams[team].set_roster(roster)
+        get_games(year, teams[team])
