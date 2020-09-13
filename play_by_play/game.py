@@ -6,6 +6,8 @@ class Game():
         self.date = ''
         self.number = ''
         self.starttime = ''
+        # Ambiguous start time in file
+        self.ambtime = ''
         self.day = ''
         self.usedh = ''
         self.umphome = ''
