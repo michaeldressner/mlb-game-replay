@@ -29,4 +29,4 @@ class Game():
         self.h_starters = list()
 
     def __repr__(self):
-        return ''
+        return self.date + ' - ' + self.visteam + '@' + self.hometeam
