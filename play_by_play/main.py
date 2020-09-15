@@ -97,6 +97,7 @@ for year in range(1990, 2020):
         roster = get_roster(year, teams[team])
         teams[team].set_roster(roster)
 
+    for team in teams:
         # Get all home games for the team from the appropriate file
         home_games = list()
         # https://www.retrosheet.org/datause.txt
@@ -125,7 +126,13 @@ for year in range(1990, 2020):
                 home_team = True if int(record[3]) == 1 else False
                 batting_pos = record[4]
                 fielding_pos = record[5]
-                print(record)
+
+                if home_team:
+                    player_team = teams[curr_game.hometeam]
+                else: #vis_team
+                    player_team = teams[curr_game.visteam]
+
+                player = player_team.status.roster[pid]
 
         # Close the file to avoid memory leak
         game_file.close()
