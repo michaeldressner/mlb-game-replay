@@ -92,6 +92,7 @@ def get_games(year, team):
 
     games = list()
     # https://www.retrosheet.org/datause.txt
+    # https://www.retrosheet.org/eventfile.htm
     game_file = open('data/EV/' + str(year) + team.abr + '.EV' + team.league)
     # curr_game will really hold a Game object soon, not a boolean
     curr_game = False
@@ -110,7 +111,7 @@ def get_games(year, team):
 
             setattr(curr_game, info, value)
         elif record_type == 'start':
-           pass 
+           pass
 
     game_file.close()
     return games
