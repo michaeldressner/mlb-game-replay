@@ -119,7 +119,10 @@ for year in range(1990, 2020):
                 info = record[1]
                 value = record[2]
 
-                setattr(curr_game, info, value)
+                if info == 'hometeam' or info == 'visteam':
+                    setattr(curr_game, info, teams[value])
+                else:
+                    setattr(curr_game, info, value)
             elif record_type == 'start':
                 pid = record[1]
                 name = record[2]
@@ -128,9 +131,9 @@ for year in range(1990, 2020):
                 fielding_pos = record[5]
 
                 if home_team:
-                    player_team = teams[curr_game.hometeam]
+                    player_team = curr_game.hometeam
                 else: #vis_team
-                    player_team = teams[curr_game.visteam]
+                    player_team = curr_game.visteam
 
                 player = player_team.status.roster[pid]
 
