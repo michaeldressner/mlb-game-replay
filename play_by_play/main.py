@@ -111,7 +111,11 @@ def get_games(year, team):
 
             setattr(curr_game, info, value)
         elif record_type == 'start':
-           pass
+            pid = record[1]
+            name = record[2]
+            home_team = True if int(record[3]) == 1 else False
+            batting_pos = record[4]
+            fielding_pos = record[5]
 
     game_file.close()
     return games
@@ -131,6 +135,3 @@ for year in range(1990, 2020):
     
     # Sort all games by date (primary key) and start time (secondary key)
     games.sort(key = lambda game: (game.date, game.starttime))
-
-    for game in games:
-        print(game)
