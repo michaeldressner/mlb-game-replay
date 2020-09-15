@@ -86,40 +86,6 @@ def get_roster(year, team):
 
     return roster
 
-def get_games(year, team):
-    """Takes in a year and a team and returns a list of game objects. Also
-    'sets up' the games by initializing the fields"""
-
-    games = list()
-    # https://www.retrosheet.org/datause.txt
-    # https://www.retrosheet.org/eventfile.htm
-    game_file = open('data/EV/' + str(year) + team.abr + '.EV' + team.league)
-    # curr_game will really hold a Game object soon, not a boolean
-    curr_game = False
-
-    for record in csv.reader(game_file):
-        record_type = record[0]
-
-        if record_type == 'id':
-            if curr_game:
-                fix_start_time(curr_game)
-                games.append(curr_game)
-            curr_game = Game()
-        elif record_type == 'info':
-            info = record[1]
-            value = record[2]
-
-            setattr(curr_game, info, value)
-        elif record_type == 'start':
-            pid = record[1]
-            name = record[2]
-            home_team = True if int(record[3]) == 1 else False
-            batting_pos = record[4]
-            fielding_pos = record[5]
-
-    game_file.close()
-    return games
-
 # MAIN PROGRAM
 
 for year in range(1990, 2020):
@@ -130,8 +96,40 @@ for year in range(1990, 2020):
     for team in teams:
         roster = get_roster(year, teams[team])
         teams[team].set_roster(roster)
-        home_games = get_games(year, teams[team])
-        games.extend(home_games)
+
+        # Get all home games for the team from the appropriate file
+        home_games = list()
+        # https://www.retrosheet.org/datause.txt
+        # https://www.retrosheet.org/eventfile.htm
+        game_file = open('data/EV/' + str(year) + teams[team].abr + '.EV' + \
+                teams[team].league)
+        # curr_game will really hold a Game object soon, not a boolean
+        curr_game = False
+
+        for record in csv.reader(game_file):
+            record_type = record[0]
+
+            if record_type == 'id':
+                if curr_game:
+                    fix_start_time(curr_game)
+                    home_games.append(curr_game)
+                curr_game = Game()
+            elif record_type == 'info':
+                info = record[1]
+                value = record[2]
+
+                setattr(curr_game, info, value)
+            elif record_type == 'start':
+                pid = record[1]
+                name = record[2]
+                home_team = True if int(record[3]) == 1 else False
+                batting_pos = record[4]
+                fielding_pos = record[5]
+                print(record)
+
+        # Close the file to avoid memory leak
+        game_file.close()
     
+        games.extend(home_games)
     # Sort all games by date (primary key) and start time (secondary key)
     games.sort(key = lambda game: (game.date, game.starttime))

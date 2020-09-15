@@ -1,3 +1,5 @@
+from game_status import GameStatus
+
 class Game():
     def __init__(self):
         self.visteam = ''
@@ -29,6 +31,7 @@ class Game():
         self.save = ''
         self.v_starters = list()
         self.h_starters = list()
+        self.status = GameStatus()
 
     def __repr__(self):
         result =  self.date + ' '
